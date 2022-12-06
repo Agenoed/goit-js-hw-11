@@ -64,7 +64,6 @@ function createMarkup(array) {
         downloads,
       }) =>
         `<div class="photo-card">
-            <div class="wrap">
                 <a class="link" href="${largeImageURL}">
                     <img class="img-item" src="${webformatURL}" alt="${tags}" loading="lazy" />
                     <div class="info">
@@ -83,13 +82,12 @@ function createMarkup(array) {
                         </p>
                     </div>
                 </a>
-            </div>
         </div>`
     )
     .join('');
 }
 
-let gallery = new SimpleLightbox('.wrap a', {
+let gallery = new SimpleLightbox('.photo-card a', {
   captionPosition: 'bottom',
   captionDelay: 250,
 });

@@ -1,0 +1,65 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI';
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+.search-form {
+  padding: 15px;
+
+  background-color: rgb(78, 27, 218);
+}
+
+.gallery {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+.photo-card {
+  border: 1px solid #eeeeee;
+  border-top: none;
+
+  flex-basis: calc((100% - 30px * (4 - 1)) / 4);
+}
+.photo-card:hover,
+.photo-card:focus {
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
+    1px 4px 6px rgba(0, 0, 0, 0.16);
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+.info-item {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.img-item {
+  width: 445px;
+  height: 234px;
+}
+
+.load-more {
+  color: #ffff;
+  margin-top: 25px;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: rgb(78, 27, 218);
+  border-color: transparent;
+}
+
+.load-more:hover {
+  background-color: rgb(35, 72, 192);
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
+    1px 4px 6px rgba(0, 0, 0, 0.16);
+}
