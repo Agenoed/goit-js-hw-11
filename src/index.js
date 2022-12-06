@@ -11,7 +11,7 @@ const btnLoadMore = document.querySelector('.load-more');
 let page = 1;
 let counterClick = 1;
 
-btnLoadMore.setAttribute('hidden', true);
+btnLoadMore.style.display = 'none';
 btnElement.addEventListener('click', onSearch);
 btnLoadMore.addEventListener('click', loadMore);
 
@@ -34,7 +34,7 @@ function onSearch(element) {
     Notiflix.Notify.failure('Please enter the text in search field');
     return;
   }
-  btnLoadMore.removeAttribute('hidden', true);
+  btnLoadMore.style.display = 'block';
 
   pixabayAPI(searchValue, (page = 1))
     .then(data => {
@@ -44,6 +44,7 @@ function onSearch(element) {
         Notiflix.Notify.failure(
           'Sorry, there are no images matching your search query. Please try again.'
         );
+        btnLoadMore.style.display = 'none';
       } else {
         Notiflix.Notify.info(`Hooray! We found ${data.totalHits} images.`);
       }
@@ -103,7 +104,7 @@ function loadMore() {
       gallery.refresh();
 
       if (counterClick === 13) {
-        btnLoadMore.setAttribute('hidden', true);
+        btnLoadMore.style.display = 'none';
         Notiflix.Notify.info(
           "We're sorry, but you've reached the end of search results."
         );
