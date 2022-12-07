@@ -9,7 +9,7 @@ const galleryElement = document.querySelector('.gallery');
 const btnLoadMore = document.querySelector('.load-more');
 
 let page = 1;
-let counterClick = 1;
+let total = 0;
 
 btnLoadMore.style.display = 'none';
 btnElement.addEventListener('click', onSearch);
@@ -26,27 +26,42 @@ async function pixabayAPI(value, page) {
 }
 
 function onSearch(element) {
+  page = 1;
+  total = 0;
   element.preventDefault();
-  galleryElement.innerHTML = '';
-  counterClick = 1;
+
   const searchValue = inputElement.value.trim();
   if (!searchValue) {
     Notiflix.Notify.failure('Please enter the text in search field');
+    galleryElement.innerHTML = '';
+    btnLoadMore.style.display = 'none';
     return;
   }
-  btnLoadMore.style.display = 'block';
 
   pixabayAPI(searchValue, (page = 1))
     .then(data => {
-      galleryElement.insertAdjacentHTML('beforeend', createMarkup(data.hits));
       gallery.refresh();
-      if (data.hits.length === 0) {
-        Notiflix.Notify.failure(
-          'Sorry, there are no images matching your search query. Please try again.'
-        );
+      total = 0;
+      total += data.hits.length;
+
+      galleryElement.innerHTML = '';
+      galleryElement.insertAdjacentHTML('beforeend', createMarkup(data.hits));
+
+      if (data.total == 0) {
         btnLoadMore.style.display = 'none';
+        Notiflix.Notify.success(
+          '"Sorry, there are no images matching your search query. Please try again."'
+        );
+        galleryElement.innerHTML = '';
       } else {
         Notiflix.Notify.info(`Hooray! We found ${data.totalHits} images.`);
+        btnLoadMore.style.display = 'block';
+      }
+      if (total === Number(data.totalHits) && data.total != 0) {
+        Notiflix.Notify.success(
+          "We're sorry, but you've reached the end of search results."
+        );
+        btnLoadMore.style.display = 'none';
       }
     })
     .catch(error => console.log(error));
@@ -95,17 +110,17 @@ let gallery = new SimpleLightbox('.photo-card a', {
 
 function loadMore() {
   page += 1;
-  counterClick += 1;
   const searchValue = inputElement.value.trim();
 
   pixabayAPI(searchValue, page)
     .then(data => {
+      console.log(data);
+      total += data.hits.length;
       galleryElement.insertAdjacentHTML('beforeend', createMarkup(data.hits));
       gallery.refresh();
-
-      if (counterClick === 13) {
+      if (total === Number(data.totalHits)) {
         btnLoadMore.style.display = 'none';
-        Notiflix.Notify.info(
+        Notiflix.Notify.success(
           "We're sorry, but you've reached the end of search results."
         );
       }
