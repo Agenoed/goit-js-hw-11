@@ -49,7 +49,7 @@ function onSearch(element) {
 
       if (data.total == 0) {
         btnLoadMore.style.display = 'none';
-        Notiflix.Notify.success(
+        Notiflix.Notify.failure(
           '"Sorry, there are no images matching your search query. Please try again."'
         );
         galleryElement.innerHTML = '';
